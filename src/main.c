@@ -19,6 +19,48 @@ void pprint_bytes(const char* string, c2dSize bytes);
 char* extended_file_name(const char* fname, const char* new_extension);
 const char* vtree_type(const c2dOptions* options);
 
+// printing sat function times
+void print_time() {
+    IS_INSTANTIATED_VAR,
+    IS_IRRELEVANT_VAR,
+    VAR_COUNT,
+    VAR2PLITERAL,
+    VAR2NLITERAL,
+    IS_IMPLIED_LITERAL,
+    LITERAL_WEIGHT,
+    DECIDE_LITERAL,
+    UNDO_DECIDE_LITERAL,
+    IS_SUBSUMED_CLAUSE,
+    CLAUSE_COUNT,
+    LEARNED_CLAUSE_COUNT,
+    ASSERT_CLAUSE,
+    STATE_NEW,
+    STATE_FREE,
+    ASSERT_UNIT_CLAUSES,
+    UNDO_ASSERT_UNIT_CLAUSES,
+    AT_ASSERTION_LEVEL,
+  printf("\n");
+  printf("Time spent in sat functions:\n");
+  printf("  is_instantiated_var\t%0.3fs\n",timing[IS_INSTANTIATED_VAR]);
+  printf("  is_irrelevant_var\t%0.3fs\n",timing[IS_IRRELEVANT_VAR]);
+  printf("  var_count\t%0.3fs\n",timing[VAR_COUNT]);
+  printf("  var2pliteral\t%0.3fs\n",timing[VAR2PLITERAL]);
+  printf("  var2nliteral\t%0.3fs\n",timing[VAR2NLITERAL]);
+  printf("  is_implied_literal\t%0.3fs\n",timing[IS_IMPLIED_LITERAL]);
+  printf("  literal_weight\t%0.3fs\n",timing[LITERAL_WEIGHT]);
+  printf("  decide_literal\t%0.3fs\n",timing[DECIDE_LITERAL]);
+  printf("  undo_decide_literal\t%0.3fs\n",timing[UNDO_DECIDE_LITERAL]);
+  printf("  is_subsumed_clause\t%0.3fs\n",timing[IS_SUBSUMED_CLAUSE]);
+  printf("  clause_count\t%0.3fs\n",timing[CLAUSE_COUNT]);
+  printf("  learned_clause_count\t%0.3fs\n",timing[LEARNED_CLAUSE_COUNT]);
+  printf("  assert_clause\t%0.3fs\n",timing[ASSERT_CLAUSE]);
+  printf("  state_new\t%0.3fs\n",timing[STATE_NEW]);
+  printf("  state_free\t%0.3fs\n",timing[STATE_FREE]);
+  printf("  assert_unit_clauses\t%0.3fs\n",timing[ASSERT_UNIT_CLAUSES]);
+  printf("  undo_assert_unit_clauses\t%0.3fs\n",timing[UNDO_ASSERT_UNIT_CLAUSES]);
+  printf("  at_assertion_level\t%0.3fs\n",timing[AT_ASSERTION_LEVEL]);
+}
+
 /******************************************************************************
  * start
  ******************************************************************************/
@@ -33,7 +75,7 @@ int main(int argc, char* argv[]) {
   clock_t start_t;
   clock_t start_total_t;
 
-  //construct CNF 
+  //construct CNF
   start_total_t = start_t = clock();
   printf("\nConstructing CNF...");
   sat_state = sat_state_new(options->cnf_filename);
@@ -82,6 +124,8 @@ int main(int argc, char* argv[]) {
     free(options);
     vtree_manager_free(manager);
     sat_state_free(sat_state);
+
+    print_time();
     return 0;
   }
 
@@ -95,7 +139,7 @@ int main(int argc, char* argv[]) {
   printf("\n  Learned clauses      \t%"PRIvS"",sat_learned_clause_count(sat_state));
   print_vtree_cache_stats(manager->cache);
   printf("\n  Compile Time\t%0.3fs",((double)(comp_t))/CLOCKS_PER_SEC);
-	
+
   char* nnf_fname = extended_file_name(options->cnf_filename,".nnf");
 
   if(options->in_memory==0) { //save NNF to file
@@ -136,7 +180,7 @@ int main(int argc, char* argv[]) {
     printf("\n  Edges           \t%"PRIvS"",nnf_edge_count(nnf));
   }
   else { //done: no further processing
-    if(options->in_memory) { 
+    if(options->in_memory) {
       c2dSize n_count = 0; c2dSize e_count = 0;
       NNF_NODE root = nnf_manager_get_root(nnf_manager);
       nnf_count_nodes(root,&n_count,&e_count);
@@ -150,9 +194,11 @@ int main(int argc, char* argv[]) {
     free(nnf_fname);
     vtree_manager_free(manager);
     sat_state_free(sat_state);
+
+    print_time();
     return 0;
   }
-	
+
   //further processing of the nnf is required
   if(options->count_models) {
     start_t = clock();
@@ -163,7 +209,7 @@ int main(int argc, char* argv[]) {
     printf("%0.3fs",((double)clock()-start_t)/CLOCKS_PER_SEC);
     free(str);
   }
-	
+
   if(options->check_entail) {
     BOOLEAN decomposable = 1;
     start_t = clock();
@@ -171,7 +217,7 @@ int main(int argc, char* argv[]) {
     if(nnf_decomposable(nnf)) printf("OK / ");
     else {
       decomposable = 0;
-      printf("Failed!!! / "); 
+      printf("Failed!!! / ");
     }
     printf("%0.3fs",((double)clock()-start_t)/CLOCKS_PER_SEC);
     start_t = clock();
@@ -189,6 +235,8 @@ int main(int argc, char* argv[]) {
   nnf_free(nnf);
   vtree_manager_free(manager);
   sat_state_free(sat_state);
+
+  print_time();
   return 0;
 }
 

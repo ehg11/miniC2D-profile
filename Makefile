@@ -14,8 +14,7 @@ else
 endif
 
 CC = g++
-CFLAGS = -O2 -Wall -Iinclude -pg
-# CFLAGS = -O0 -Iinclude -fno-inline -pg
+CFLAGS = -O2 -Wall -Iinclude
 LFLAGS = -L$(LIB) -lsat -lvtree -lnnf -lutil -lgmp
 
 C2D_PACKAGE = \"miniC2D\"
@@ -28,7 +27,8 @@ SRC = src/main.c\
       src/cnf_key.c\
       src/compile.c\
       src/count.c\
-      src/utilities.c
+      src/utilities.c\
+      src/timing.c
 
 OBJS=$(SRC:.c=.o) src/getopt.o
 
