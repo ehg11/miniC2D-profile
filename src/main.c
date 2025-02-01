@@ -41,24 +41,24 @@ void print_time() {
     AT_ASSERTION_LEVEL,
   printf("\n");
   printf("=TIMESTART=\n");
-  printf("is_instantiated_var\t%0.5fs\n",timing[IS_INSTANTIATED_VAR]);
-  printf("is_irrelevant_var\t%0.5fs\n",timing[IS_IRRELEVANT_VAR]);
-  printf("var_count\t%0.5fs\n",timing[VAR_COUNT]);
-  printf("var2pliteral\t%0.5fs\n",timing[VAR2PLITERAL]);
-  printf("var2nliteral\t%0.5fs\n",timing[VAR2NLITERAL]);
-  printf("is_implied_literal\t%0.5fs\n",timing[IS_IMPLIED_LITERAL]);
-  printf("literal_weight\t%0.5fs\n",timing[LITERAL_WEIGHT]);
-  printf("decide_literal\t%0.5fs\n",timing[DECIDE_LITERAL]);
-  printf("undo_decide_literal\t%0.5fs\n",timing[UNDO_DECIDE_LITERAL]);
-  printf("is_subsumed_clause\t%0.5fs\n",timing[IS_SUBSUMED_CLAUSE]);
-  printf("clause_count\t%0.5fs\n",timing[CLAUSE_COUNT]);
-  printf("learned_clause_count\t%0.5fs\n",timing[LEARNED_CLAUSE_COUNT]);
-  printf("assert_clause\t%0.5fs\n",timing[ASSERT_CLAUSE]);
-  printf("state_new\t%0.5fs\n",timing[STATE_NEW]);
-  printf("state_free\t%0.5fs\n",timing[STATE_FREE]);
-  printf("assert_unit_clauses\t%0.5fs\n",timing[ASSERT_UNIT_CLAUSES]);
-  printf("undo_assert_unit_clauses\t%0.5fs\n",timing[UNDO_ASSERT_UNIT_CLAUSES]);
-  printf("at_assertion_level\t%0.5fs\n",timing[AT_ASSERTION_LEVEL]);
+  printf("is_instantiated_var\t%fs\n",timing[IS_INSTANTIATED_VAR]);
+  printf("is_irrelevant_var\t%fs\n",timing[IS_IRRELEVANT_VAR]);
+  printf("var_count\t%fs\n",timing[VAR_COUNT]);
+  printf("var2pliteral\t%fs\n",timing[VAR2PLITERAL]);
+  printf("var2nliteral\t%fs\n",timing[VAR2NLITERAL]);
+  printf("is_implied_literal\t%fs\n",timing[IS_IMPLIED_LITERAL]);
+  printf("literal_weight\t%fs\n",timing[LITERAL_WEIGHT]);
+  printf("decide_literal\t%fs\n",timing[DECIDE_LITERAL]);
+  printf("undo_decide_literal\t%fs\n",timing[UNDO_DECIDE_LITERAL]);
+  printf("is_subsumed_clause\t%fs\n",timing[IS_SUBSUMED_CLAUSE]);
+  printf("clause_count\t%fs\n",timing[CLAUSE_COUNT]);
+  printf("learned_clause_count\t%fs\n",timing[LEARNED_CLAUSE_COUNT]);
+  printf("assert_clause\t%fs\n",timing[ASSERT_CLAUSE]);
+  printf("state_new\t%fs\n",timing[STATE_NEW]);
+  printf("state_free\t%fs\n",timing[STATE_FREE]);
+  printf("assert_unit_clauses\t%fs\n",timing[ASSERT_UNIT_CLAUSES]);
+  printf("undo_assert_unit_clauses\t%fs\n",timing[UNDO_ASSERT_UNIT_CLAUSES]);
+  printf("at_assertion_level\t%fs\n",timing[AT_ASSERTION_LEVEL]);
 
   double total_time = 0;
   for (int i = 0; i < SAT_FUNC_COUNT; i++) {
