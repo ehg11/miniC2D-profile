@@ -40,25 +40,33 @@ void print_time() {
     UNDO_ASSERT_UNIT_CLAUSES,
     AT_ASSERTION_LEVEL,
   printf("\n");
-  printf("Time spent in sat functions:\n");
-  printf("  is_instantiated_var\t%0.3fs\n",timing[IS_INSTANTIATED_VAR]);
-  printf("  is_irrelevant_var\t%0.3fs\n",timing[IS_IRRELEVANT_VAR]);
-  printf("  var_count\t%0.3fs\n",timing[VAR_COUNT]);
-  printf("  var2pliteral\t%0.3fs\n",timing[VAR2PLITERAL]);
-  printf("  var2nliteral\t%0.3fs\n",timing[VAR2NLITERAL]);
-  printf("  is_implied_literal\t%0.3fs\n",timing[IS_IMPLIED_LITERAL]);
-  printf("  literal_weight\t%0.3fs\n",timing[LITERAL_WEIGHT]);
-  printf("  decide_literal\t%0.3fs\n",timing[DECIDE_LITERAL]);
-  printf("  undo_decide_literal\t%0.3fs\n",timing[UNDO_DECIDE_LITERAL]);
-  printf("  is_subsumed_clause\t%0.3fs\n",timing[IS_SUBSUMED_CLAUSE]);
-  printf("  clause_count\t%0.3fs\n",timing[CLAUSE_COUNT]);
-  printf("  learned_clause_count\t%0.3fs\n",timing[LEARNED_CLAUSE_COUNT]);
-  printf("  assert_clause\t%0.3fs\n",timing[ASSERT_CLAUSE]);
-  printf("  state_new\t%0.3fs\n",timing[STATE_NEW]);
-  printf("  state_free\t%0.3fs\n",timing[STATE_FREE]);
-  printf("  assert_unit_clauses\t%0.3fs\n",timing[ASSERT_UNIT_CLAUSES]);
-  printf("  undo_assert_unit_clauses\t%0.3fs\n",timing[UNDO_ASSERT_UNIT_CLAUSES]);
-  printf("  at_assertion_level\t%0.3fs\n",timing[AT_ASSERTION_LEVEL]);
+  printf("=TIMESTART=\n");
+  printf("is_instantiated_var\t%0.5fs\n",timing[IS_INSTANTIATED_VAR]);
+  printf("is_irrelevant_var\t%0.5fs\n",timing[IS_IRRELEVANT_VAR]);
+  printf("var_count\t%0.5fs\n",timing[VAR_COUNT]);
+  printf("var2pliteral\t%0.5fs\n",timing[VAR2PLITERAL]);
+  printf("var2nliteral\t%0.5fs\n",timing[VAR2NLITERAL]);
+  printf("is_implied_literal\t%0.5fs\n",timing[IS_IMPLIED_LITERAL]);
+  printf("literal_weight\t%0.5fs\n",timing[LITERAL_WEIGHT]);
+  printf("decide_literal\t%0.5fs\n",timing[DECIDE_LITERAL]);
+  printf("undo_decide_literal\t%0.5fs\n",timing[UNDO_DECIDE_LITERAL]);
+  printf("is_subsumed_clause\t%0.5fs\n",timing[IS_SUBSUMED_CLAUSE]);
+  printf("clause_count\t%0.5fs\n",timing[CLAUSE_COUNT]);
+  printf("learned_clause_count\t%0.5fs\n",timing[LEARNED_CLAUSE_COUNT]);
+  printf("assert_clause\t%0.5fs\n",timing[ASSERT_CLAUSE]);
+  printf("state_new\t%0.5fs\n",timing[STATE_NEW]);
+  printf("state_free\t%0.5fs\n",timing[STATE_FREE]);
+  printf("assert_unit_clauses\t%0.5fs\n",timing[ASSERT_UNIT_CLAUSES]);
+  printf("undo_assert_unit_clauses\t%0.5fs\n",timing[UNDO_ASSERT_UNIT_CLAUSES]);
+  printf("at_assertion_level\t%0.5fs\n",timing[AT_ASSERTION_LEVEL]);
+
+  double total_time = 0;
+  for (int i = 0; i < SAT_FUNC_COUNT; i++) {
+    total_time += timing[i];
+  }
+
+  printf("total_time\t%0.5fs\n", total_time);
+  printf("=TIMEEND=\n");
 }
 
 /******************************************************************************
@@ -78,7 +86,7 @@ int main(int argc, char* argv[]) {
   //construct CNF
   start_total_t = start_t = clock();
   printf("\nConstructing CNF...");
-  sat_state = sat_state_new(options->cnf_filename);
+  sat_state = time_sat_state_new(options->cnf_filename);
   clock_t sat_t = clock()-start_t;
   printf(" DONE");
   printf("\nCNF stats: ");
@@ -123,7 +131,7 @@ int main(int argc, char* argv[]) {
     printf("\nTotal Time: %0.3fs\n\n",((double)clock()-start_total_t)/CLOCKS_PER_SEC);
     free(options);
     vtree_manager_free(manager);
-    sat_state_free(sat_state);
+    time_sat_state_free(sat_state);
 
     print_time();
     return 0;
@@ -193,7 +201,7 @@ int main(int argc, char* argv[]) {
     free(options);
     free(nnf_fname);
     vtree_manager_free(manager);
-    sat_state_free(sat_state);
+    time_sat_state_free(sat_state);
 
     print_time();
     return 0;
@@ -234,7 +242,7 @@ int main(int argc, char* argv[]) {
   free(nnf_fname);
   nnf_free(nnf);
   vtree_manager_free(manager);
-  sat_state_free(sat_state);
+  time_sat_state_free(sat_state);
 
   print_time();
   return 0;

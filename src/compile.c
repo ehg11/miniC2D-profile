@@ -46,15 +46,15 @@ NnfManager* compile_vtree(VtreeManager* manager, SatState* sat_state) {
   NNF_NODE node;
   Clause* learned_clause  = NULL;
   DVtree* vtree           = manager->vtree;
-  NnfManager* nnf_manager = nnf_manager_new(sat_var_count(sat_state),UNIQUE_TABLE_CAPACITY);
+  NnfManager* nnf_manager = nnf_manager_new(time_sat_var_count(sat_state),UNIQUE_TABLE_CAPACITY);
 
-  if(sat_assert_unit_clauses(sat_state)) { //unit resolution succeeded
+  if(time_sat_assert_unit_clauses(sat_state)) { //unit resolution succeeded
     compile_dispatcher(&node,&learned_clause,vtree,manager,nnf_manager,sat_state);
     if(learned_clause!=NULL) node = ZERO_NNF_NODE; //cnf is inconsistent
   }
   else node = ZERO_NNF_NODE; //cnf is inconsistent
 
-  sat_undo_assert_unit_clauses(sat_state);
+  time_sat_undo_assert_unit_clauses(sat_state);
   nnf_manager_set_root(node,nnf_manager);
   return nnf_manager;
 }
@@ -68,10 +68,10 @@ NnfManager* compile_vtree(VtreeManager* manager, SatState* sat_state) {
  ******************************************************************************/
 
 NNF_NODE var2nnf(Var* var, NnfManager* nnf_manager) {
-  Lit* plit = sat_var2pliteral(var);
-  Lit* nlit = sat_var2nliteral(var);
-  if(sat_is_implied_literal(plit))      return nnf_literal2node(plit,nnf_manager);
-  else if(sat_is_implied_literal(nlit)) return nnf_literal2node(nlit,nnf_manager);
+  Lit* plit = time_sat_var2pliteral(var);
+  Lit* nlit = time_sat_var2nliteral(var);
+  if(time_sat_is_implied_literal(plit))      return nnf_literal2node(plit,nnf_manager);
+  else if(time_sat_is_implied_literal(nlit)) return nnf_literal2node(nlit,nnf_manager);
   else return ONE_NNF_NODE;
 }
 
@@ -113,12 +113,12 @@ void compile_vtree_shannon(NNF_NODE* node, Clause** learned_clause, DVtree* vtre
 
 static inline
 BOOLEAN compile_with_literal(NNF_NODE* node, Clause** learned_clause, Lit* literal, DVtree* vtree, VtreeManager* vtree_manager, NnfManager* nnf_manager, SatState* sat_state) {
-  *learned_clause = sat_decide_literal(literal,sat_state);
+  *learned_clause = time_sat_decide_literal(literal,sat_state);
   if(*learned_clause==NULL) compile_dispatcher(node,learned_clause,vtree->right,vtree_manager,nnf_manager,sat_state);
-  sat_undo_decide_literal(sat_state);
+  time_sat_undo_decide_literal(sat_state);
   if(*learned_clause!=NULL) { //a clause was learned
-    if(sat_at_assertion_level(*learned_clause,sat_state)) {
-      *learned_clause = sat_assert_clause(*learned_clause,sat_state);
+    if(time_sat_at_assertion_level(*learned_clause,sat_state)) {
+      *learned_clause = time_sat_assert_clause(*learned_clause,sat_state);
       //if another clause was learned, its assertion level must be lower (hence, we must backtrack)
       //if another clause was not learned, then we are ready to try vtree again (with the learned clause)
       if(*learned_clause==NULL) compile_vtree_shannon(node,learned_clause,vtree,vtree_manager,nnf_manager,sat_state);
@@ -131,14 +131,14 @@ BOOLEAN compile_with_literal(NNF_NODE* node, Clause** learned_clause, Lit* liter
 void compile_vtree_shannon(NNF_NODE* node, Clause** learned_clause, DVtree* vtree, VtreeManager* vtree_manager, NnfManager* nnf_manager, SatState* sat_state) {
   Var* var = vtree_shannon_var(vtree);
 
-  if(time_sat_is_instantiated_var(var) || sat_is_irrelevant_var(var)) {
+  if(time_sat_is_instantiated_var(var) || time_sat_is_irrelevant_var(var)) {
     compile_dispatcher(node,learned_clause,vtree->right,vtree_manager,nnf_manager,sat_state);
     if(*learned_clause==NULL) *node = nnf_conjoin(*node,var2nnf(var,nnf_manager),nnf_manager);
     return;
   }
 
-  Lit* plit = sat_var2pliteral(var);
-  Lit* nlit = sat_var2nliteral(var);
+  Lit* plit = time_sat_var2pliteral(var);
+  Lit* nlit = time_sat_var2nliteral(var);
 
   if(!compile_with_literal(node,learned_clause,plit,vtree,vtree_manager,nnf_manager,sat_state)) return;
   assert(*learned_clause==NULL);
