@@ -73,8 +73,8 @@ void free_vtree_cache(VtreeCache* cache) {
 
 static BOOLEAN should_cache(const DVtree* vtree) {
   return vtree->live_cache &&
-         vtree_is_shannon_node(vtree) &&
-         !time_sat_is_instantiated_var(vtree_shannon_var(vtree));
+         time_vtree_is_shannon_node(vtree) &&
+         !time_sat_is_instantiated_var(time_vtree_shannon_var(vtree));
 }
 
 /******************************************************************************

@@ -46,7 +46,7 @@ NnfManager* compile_vtree(VtreeManager* manager, SatState* sat_state) {
   NNF_NODE node;
   Clause* learned_clause  = NULL;
   DVtree* vtree           = manager->vtree;
-  NnfManager* nnf_manager = nnf_manager_new(time_sat_var_count(sat_state),UNIQUE_TABLE_CAPACITY);
+  NnfManager* nnf_manager = time_nnf_manager_new(time_sat_var_count(sat_state),UNIQUE_TABLE_CAPACITY);
 
   if(time_sat_assert_unit_clauses(sat_state)) { //unit resolution succeeded
     compile_dispatcher(&node,&learned_clause,vtree,manager,nnf_manager,sat_state);
@@ -55,7 +55,7 @@ NnfManager* compile_vtree(VtreeManager* manager, SatState* sat_state) {
   else node = ZERO_NNF_NODE; //cnf is inconsistent
 
   time_sat_undo_assert_unit_clauses(sat_state);
-  nnf_manager_set_root(node,nnf_manager);
+  time_nnf_manager_set_root(node,nnf_manager);
   return nnf_manager;
 }
 
@@ -70,13 +70,13 @@ NnfManager* compile_vtree(VtreeManager* manager, SatState* sat_state) {
 NNF_NODE var2nnf(Var* var, NnfManager* nnf_manager) {
   Lit* plit = time_sat_var2pliteral(var);
   Lit* nlit = time_sat_var2nliteral(var);
-  if(time_sat_is_implied_literal(plit))      return nnf_literal2node(plit,nnf_manager);
-  else if(time_sat_is_implied_literal(nlit)) return nnf_literal2node(nlit,nnf_manager);
+  if(time_sat_is_implied_literal(plit))      return time_nnf_literal2node(plit,nnf_manager);
+  else if(time_sat_is_implied_literal(nlit)) return time_nnf_literal2node(nlit,nnf_manager);
   else return ONE_NNF_NODE;
 }
 
 void compile_vtree_leaf(NNF_NODE* node, Clause** learned_clause, DVtree* vtree, NnfManager* nnf_manager) {
-  assert(vtree_is_leaf(vtree));
+  assert(time_vtree_is_leaf(vtree));
   *node = var2nnf(vtree->var,nnf_manager);
   *learned_clause = NULL;
 }
@@ -102,7 +102,7 @@ void compile_vtree_decomposed(NNF_NODE* node, Clause** learned_clause, DVtree* v
   }
 
   assert(*learned_clause==NULL);
-  *node = nnf_conjoin(l_node,r_node,nnf_manager);
+  *node = time_nnf_conjoin(l_node,r_node,nnf_manager);
 }
 
 /******************************************************************************
@@ -129,11 +129,11 @@ BOOLEAN compile_with_literal(NNF_NODE* node, Clause** learned_clause, Lit* liter
 }
 
 void compile_vtree_shannon(NNF_NODE* node, Clause** learned_clause, DVtree* vtree, VtreeManager* vtree_manager, NnfManager* nnf_manager, SatState* sat_state) {
-  Var* var = vtree_shannon_var(vtree);
+  Var* var = time_vtree_shannon_var(vtree);
 
   if(time_sat_is_instantiated_var(var) || time_sat_is_irrelevant_var(var)) {
     compile_dispatcher(node,learned_clause,vtree->right,vtree_manager,nnf_manager,sat_state);
-    if(*learned_clause==NULL) *node = nnf_conjoin(*node,var2nnf(var,nnf_manager),nnf_manager);
+    if(*learned_clause==NULL) *node = time_nnf_conjoin(*node,var2nnf(var,nnf_manager),nnf_manager);
     return;
   }
 
@@ -152,11 +152,11 @@ void compile_vtree_shannon(NNF_NODE* node, Clause** learned_clause, DVtree* vtre
 
   if(pnode==nnode) *node = pnode;
   else {
-    NNF_NODE pl  = nnf_literal2node(plit,nnf_manager);
-    NNF_NODE nl  = nnf_literal2node(nlit,nnf_manager);
-    NNF_NODE pc  = nnf_conjoin(pl,pnode,nnf_manager);
-    NNF_NODE nc  = nnf_conjoin(nl,nnode,nnf_manager);
-    *node        = nnf_disjoin(var,pc,nc,nnf_manager);
+    NNF_NODE pl  = time_nnf_literal2node(plit,nnf_manager);
+    NNF_NODE nl  = time_nnf_literal2node(nlit,nnf_manager);
+    NNF_NODE pc  = time_nnf_conjoin(pl,pnode,nnf_manager);
+    NNF_NODE nc  = time_nnf_conjoin(nl,nnode,nnf_manager);
+    *node        = time_nnf_disjoin(var,pc,nc,nnf_manager);
   }
 }
 
@@ -175,9 +175,9 @@ void compile_dispatcher(NNF_NODE* node, Clause** learned_clause, DVtree* vtree, 
   }
 
   //need to compile
-  if(vtree_is_leaf(vtree))
+  if(time_vtree_is_leaf(vtree))
     compile_vtree_leaf(node,learned_clause,vtree,nnf_manager);
-  else if(vtree_is_shannon_node(vtree))
+  else if(time_vtree_is_shannon_node(vtree))
     compile_vtree_shannon(node,learned_clause,vtree,vtree_manager,nnf_manager,sat_state);
   else
     compile_vtree_decomposed(node,learned_clause,vtree,vtree_manager,nnf_manager,sat_state);

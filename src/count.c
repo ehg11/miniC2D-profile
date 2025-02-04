@@ -67,7 +67,7 @@ c2dWmc var2count(Var* var) {
 }
 
 void count_vtree_leaf(c2dWmc* count, Clause** learned_clause, DVtree* vtree) {
-  assert(vtree_is_leaf(vtree));
+  assert(time_vtree_is_leaf(vtree));
   *count = var2count(vtree->var);
   *learned_clause = NULL;
 }
@@ -124,7 +124,7 @@ BOOLEAN count_with_literal(c2dWmc* count, Clause** learned_clause, Lit* literal,
 }
 
 void count_vtree_shannon(c2dWmc* count, Clause** learned_clause, DVtree* vtree, VtreeManager* vtree_manager, SatState* sat_state) {
-  Var* var = vtree_shannon_var(vtree);
+  Var* var = time_vtree_shannon_var(vtree);
 
   if(time_sat_is_instantiated_var(var) || time_sat_is_irrelevant_var(var)) {
     count_dispatcher(count,learned_clause,vtree->right,vtree_manager,sat_state);
@@ -163,9 +163,9 @@ void count_dispatcher(c2dWmc* count, Clause** learned_clause, DVtree* vtree, Vtr
   }
 
   //need to count
-  if(vtree_is_leaf(vtree))
+  if(time_vtree_is_leaf(vtree))
     count_vtree_leaf(count,learned_clause,vtree);
-  else if(vtree_is_shannon_node(vtree))
+  else if(time_vtree_is_shannon_node(vtree))
     count_vtree_shannon(count,learned_clause,vtree,vtree_manager,sat_state);
   else
     count_vtree_decomposed(count,learned_clause,vtree,vtree_manager,sat_state);
