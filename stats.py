@@ -7,9 +7,21 @@ from datetime import datetime
 
 def run_miniC2D() -> str:
     """Run miniC2D and capture its stdout."""
-    result = subprocess.run(["./run_miniC2D.sh"], capture_output=True, text=True)
-    print(result.stdout)
-    return result.stdout
+    output = []
+    process = subprocess.Popen(
+        ["./run_miniC2D.sh"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+
+    for line in process.stdout:
+        print(line, end="")
+        output.append(line)
+
+    process.wait()
+
+    return "".join(output)
 
 
 def parse_stdout(stdout: str) -> Dict:
