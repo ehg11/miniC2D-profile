@@ -3,11 +3,16 @@ import os
 import pandas as pd
 from datetime import datetime
 
-from config import MD_DIR
+from config import MD_DIR, STATS_DIR
 
 
 def get_cnf_paths(cnf_dir):
     cnfs = [os.path.join(cnf_dir, f) for f in os.listdir(cnf_dir) if f.endswith(".cnf")]
+
+    # remove CNFs that have already been processed
+    cnfs = [
+        f for f in cnfs if not os.path.exists(f"{STATS_DIR}{os.path.basename(f)}.json")
+    ]
 
     # sort in order of smallest->biggest
     # makes it easier to see progress
