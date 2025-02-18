@@ -11,8 +11,17 @@ def run_miniC2D(cnf_path: str) -> str:
     output = []
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     print(f"[{timestamp}] Running miniC2D on {cnf_path}")
+
+    # NOTE: using default vtree method (0) requires special libraries for
+    # hypergraph partitioning. We use min-fill elimination order (4) instead.
     process = subprocess.Popen(
-        ["./bin/linux/miniC2D", "--cnf", cnf_path],
+        [
+            "./bin/linux/miniC2D",
+            "--vtree_method",
+            4,  # min-fill elimination order
+            "--cnf",
+            cnf_path,
+        ],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
