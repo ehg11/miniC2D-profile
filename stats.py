@@ -1,15 +1,18 @@
 import subprocess
-import sys
 import json
-from typing import List, Dict
+from typing import Dict
 from datetime import datetime
 
+from config import STATS_DIR
 
-def run_miniC2D() -> str:
+
+def run_miniC2D(cnf_path: str) -> str:
     """Run miniC2D and capture its stdout."""
     output = []
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    print(f"[{timestamp}] Running miniC2D on {cnf_path}")
     process = subprocess.Popen(
-        ["./run_miniC2D.sh"],
+        ["./bin/linux/miniC2D", "--cnf", cnf_path],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
@@ -20,11 +23,13 @@ def run_miniC2D() -> str:
         output.append(line)
 
     process.wait()
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    print(f"[{timestamp}] {cnf_path} finished")
 
     return "".join(output)
 
 
-def parse_stdout(stdout: str) -> Dict:
+def parse_stats(stdout: str) -> Dict:
     """Parse the stdout and extract the required information."""
     data = {}
     lines = stdout.strip().splitlines()
@@ -53,26 +58,13 @@ def parse_stdout(stdout: str) -> Dict:
     return data
 
 
-def main(iterations: int) -> List[Dict]:
-    results = []
-    for i in range(iterations):
-        print("Running C2D Iteration:", i + 1)
-        stdout = run_miniC2D()
-        data = parse_stdout(stdout)
-        results.append(data)
-    return results
+def save_to_stats(data: Dict, cnf: str):
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    stats_file = f"{STATS_DIR}{cnf}.json"
+    print(f"[{timestamp}] Saving stats to {stats_file}...")
 
+    with open(stats_file, "w") as f:
+        json.dump(data, f, indent=4)
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python stats.py <iterations>")
-        sys.exit(1)
-
-    iterations = int(sys.argv[1])
-    results = main(iterations)
-
-    json_stats = json.dumps(results, indent=4)
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    print(f'Saving stats to "stats-{timestamp}.json"')
-    with open(f"stats-{timestamp}.json", "w") as f:
-        f.write(json_stats)
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    print(f"[{timestamp}] Stats saved to {stats_file}")

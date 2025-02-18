@@ -1,5 +1,8 @@
 *.o
 *.tmp
 profile_outputs/
-cnfs/
+cnfs/*
+!cnfs/paper
 stats*.json
+__pycache__
+stats/old
