@@ -2,9 +2,9 @@ import subprocess
 import json
 from typing import Dict
 from datetime import datetime
+import os
 
 from config import STATS_DIR
-
 
 def run_miniC2D(cnf_path: str) -> str:
     """Run miniC2D and capture its stdout."""
@@ -18,7 +18,7 @@ def run_miniC2D(cnf_path: str) -> str:
         [
             "./bin/linux/miniC2D",
             "--vtree_method",
-            4,  # min-fill elimination order
+            "4", # min-fill elimination order
             "--cnf",
             cnf_path,
         ],
@@ -72,7 +72,8 @@ def save_to_stats(data: Dict, cnf: str):
     stats_file = f"{STATS_DIR}{cnf}.json"
     print(f"[{timestamp}] Saving stats to {stats_file}...")
 
-    with open(stats_file, "w") as f:
+    os.makedirs(STATS_DIR, exist_ok=True)
+    with open(stats_file, "w+") as f:
         json.dump(data, f, indent=4)
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")

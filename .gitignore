@@ -5,3 +5,7 @@ cnfs
 stats*.json
 __pycache__
 stats/old
+bin/python*
+lib64
+pyvenv.cfg
+myenv

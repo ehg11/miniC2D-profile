@@ -28,8 +28,8 @@ def load_data(filename):
     return data
 
 
-def get_percentage_of_compile(single_run_data):
-    compile_time = single_run_data["compile_time"]
+def get_percentage_time(single_run_data):
+    total_time = single_run_data["total_time"]
 
     res = {}
     total_api_time = 0
@@ -49,12 +49,12 @@ def get_percentage_of_compile(single_run_data):
             total_nnf_time += time
         elif function.startswith("vtree_"):
             total_vtree_time += time
-        res[function] = time / compile_time * 100
+        res[function] = time / total_time * 100
 
-    res["total_api_time"] = total_api_time / compile_time * 100
-    res["total_sat_time"] = total_sat_time / compile_time * 100
-    res["total_nnf_time"] = total_nnf_time / compile_time * 100
-    res["total_vtree_time"] = total_vtree_time / compile_time * 100
+    res["total_api_time"] = total_api_time / total_time * 100
+    res["total_sat_time"] = total_sat_time / total_time * 100
+    res["total_nnf_time"] = total_nnf_time / total_time * 100
+    res["total_vtree_time"] = total_vtree_time / total_time * 100
 
     # NOTE: the pandas DF expects this as a list
     return [res]
@@ -93,14 +93,15 @@ def get_function_stats(average_stats: pd.DataFrame):
 
 
 def save_to_md(cnf: str, totals: pd.DataFrame, functions: pd.DataFrame):
-    totals.columns = ["Function", "Percentage of Compile Time"]
-    functions.columns = ["Function", "Percentage of Compile Time"]
+    totals.columns = ["Function", "Percentage of Total Time"]
+    functions.columns = ["Function", "Percentage of Total Time"]
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     filename = f"{MD_DIR}{cnf}.md"
 
     print(f"[{timestamp}] Saving MD tables to {filename}...")
-    with open(filename, "w") as f:
+    os.makedirs(MD_DIR, exist_ok=True)
+    with open(filename, "w+") as f:
         f.write(f"# Stats for {cnf}\n\n")
         f.write("## Aggregate Stats\n")
         f.write(totals.to_markdown(index=False))
