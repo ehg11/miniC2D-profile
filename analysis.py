@@ -14,10 +14,6 @@ def get_cnf_paths(cnf_dir):
         f for f in cnfs if not os.path.exists(f"{STATS_DIR}{os.path.basename(f)}.json")
     ]
 
-    # sort in order of smallest->biggest
-    # makes it easier to see progress
-    cnfs.sort(key=os.path.getsize)
-
     return cnfs
 
 

@@ -16,9 +16,13 @@ from stats import parse_stats, run_miniC2D, save_to_stats
 
 def individual_cnfs():
     cnf_paths = get_cnf_paths(CNF_DIR)
+    timed_out = []
     for cnf_path in cnf_paths:
         # getting stats
-        stats = run_miniC2D(cnf_path)
+        stats, timeout = run_miniC2D(cnf_path)
+        if timeout:
+            timed_out.append(cnf_path)
+            continue
         data = parse_stats(stats)
 
         # analysis

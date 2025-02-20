@@ -6,7 +6,8 @@ import os
 
 from config import STATS_DIR
 
-def run_miniC2D(cnf_path: str) -> str:
+
+def run_miniC2D(cnf_path: str) -> tuple[str, bool]:
     """Run miniC2D and capture its stdout."""
     output = []
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
@@ -18,7 +19,7 @@ def run_miniC2D(cnf_path: str) -> str:
         [
             "./bin/linux/miniC2D",
             "--vtree_method",
-            "4", # min-fill elimination order
+            "4",  # min-fill elimination order
             "--cnf",
             cnf_path,
         ],
@@ -27,15 +28,26 @@ def run_miniC2D(cnf_path: str) -> str:
         text=True,
     )
 
-    for line in process.stdout:
-        print(line, end="")
-        output.append(line)
+    try:
+        for line in process.stdout:
+            print(line, end="")
+            output.append(line)
 
-    process.wait()
+        process.wait(timeout=(4 * 60 * 60))  # 4 hour timeout
+    except subprocess.TimeoutExpired:
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        print(
+            f"[{timestamp}] Execution exceeded 4 hours. Killing miniC2D for {cnf_path}..."
+        )
+        process.kill()
+        process.communicate()
+
+        return cnf_path, True
+
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     print(f"[{timestamp}] {cnf_path} finished")
 
-    return "".join(output)
+    return "".join(output), False
 
 
 def parse_stats(stdout: str) -> Dict:
