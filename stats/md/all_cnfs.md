@@ -1,42 +1,45 @@
 # Stats for all_cnfs
 
 ## Aggregate Stats
-| Function         |   Percentage of Total Time |
-|:-----------------|---------------------------:|
-| total_api_time   |                   61.1174  |
-| total_sat_time   |                   34.4979  |
-| total_vtree_time |                   23.871   |
-| total_nnf_time   |                    2.74848 |
+
+| Category        |   Elapsed Time |   Percentage of Total Time |
+|:----------------|---------------:|---------------------------:|
+| nnf_functions   |        2047.69 |                    2.85028 |
+| sat_functions   |       28816.9  |                   40.1117  |
+| vtree_functions |        5753.45 |                    8.00852 |
+| all_apis        |       36618.1  |                   50.9705  |
 
 ## Function Stats
-| Function                     |   Percentage of Total Time |
-|:-----------------------------|---------------------------:|
-| vtree_manager_new            |               16.05        |
-| sat_is_subsumed_clause       |               10.1432      |
-| sat_is_implied_literal       |                7.1536      |
-| sat_var2nliteral             |                3.88973     |
-| sat_var2pliteral             |                3.87905     |
-| vtree_is_shannon_node        |                3.39726     |
-| sat_decide_literal           |                2.9379      |
-| sat_assert_clause            |                2.84158     |
-| sat_is_instantiated_var      |                2.82251     |
-| vtree_shannon_var            |                2.80824     |
-| nnf_conjoin                  |                1.47207     |
-| vtree_is_leaf                |                1.43718     |
-| nnf_literal2node             |                1.15895     |
-| sat_undo_decide_literal      |                0.666746    |
-| vtree_manager_free           |                0.177906    |
-| sat_is_irrelevant_var        |                0.0614384   |
-| nnf_disjoin                  |                0.0573864   |
-| nnf_manager_save_to_file     |                0.0569983   |
-| sat_state_new                |                0.0486333   |
-| sat_at_assertion_level       |                0.0412052   |
-| sat_state_free               |                0.0114163   |
-| nnf_manager_free             |                0.00242565  |
-| nnf_manager_new              |                0.000624163 |
-| sat_undo_assert_unit_clauses |                0.000556355 |
-| vtree_print_widths           |                0.000369334 |
-| sat_assert_unit_clauses      |                0.000342749 |
-| nnf_manager_set_root         |                1.4153e-05  |
-| sat_var_count                |                9.08104e-06 |
-| nnf_manager_memory           |                5.59272e-06 |
+
+| Function                     |   Elapsed Time |   Percentage of Total Time |
+|:-----------------------------|---------------:|---------------------------:|
+| total_time                   |   71841.6      |              100           |
+| sat_is_subsumed_clause       |   11098.8      |               15.449       |
+| sat_is_implied_literal       |    6950.6      |                9.67489     |
+| sat_var2nliteral             |    3645.55     |                5.07443     |
+| sat_var2pliteral             |    3631.97     |                5.05552     |
+| vtree_is_shannon_node        |    2355.35     |                3.27853     |
+| sat_is_instantiated_var      |    2022.92     |                2.8158      |
+| vtree_shannon_var            |    2022.05     |                2.81459     |
+| nnf_conjoin                  |    1131.78     |                1.57538     |
+| vtree_is_leaf                |     962.976    |                1.34041     |
+| nnf_literal2node             |     835.711    |                1.16327     |
+| sat_decide_literal           |     812.863    |                1.13146     |
+| sat_assert_clause            |     570.088    |                0.793535    |
+| vtree_manager_new            |     409.666    |                0.570235    |
+| sat_undo_decide_literal      |      64.5118   |                0.0897972   |
+| nnf_manager_save_to_file     |      50.3082   |                0.0700265   |
+| nnf_disjoin                  |      29.7704   |                0.0414389   |
+| sat_is_irrelevant_var        |      15.4785   |                0.0215453   |
+| vtree_manager_free           |       3.40735  |                0.00474287  |
+| sat_at_assertion_level       |       2.00825  |                0.00279538  |
+| sat_state_free               |       1.75329  |                0.00244049  |
+| sat_state_new                |       0.379715 |                0.000528544 |
+| nnf_manager_free             |       0.118672 |                0.000165186 |
+| sat_assert_unit_clauses      |       0.0049   |                6.82056e-06 |
+| sat_undo_assert_unit_clauses |       0.003851 |                5.3604e-06  |
+| nnf_manager_new              |       0.0025   |                3.47988e-06 |
+| vtree_print_widths           |       0.001512 |                2.10463e-06 |
+| nnf_manager_set_root         |       6.5e-05  |                9.04768e-08 |
+| sat_var_count                |       3.6e-05  |                5.01102e-08 |
+| nnf_manager_memory           |       2.5e-05  |                3.47988e-08 |
