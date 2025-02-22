@@ -24,73 +24,61 @@ def load_data(filename):
     return data
 
 
-def get_percentage_time(single_run_data):
-    total_time = single_run_data["total_time"]
+def build_df(data: dict):
+    # NOTE: some vtree functions are not included in compile time
+    # remove compile time key
+    if "compile_time" in data:
+        del data["compile_time"]
 
-    res = {}
-    total_api_time = 0
-    total_sat_time = 0
-    total_nnf_time = 0
-    total_vtree_time = 0
-    for function, time in single_run_data.items():
-        if function == "compile_time":
-            continue
-        if function == "total_time":
-            continue
+    timing_df = pd.DataFrame.from_dict(data, orient="index").reset_index()
+    timing_df.columns = ["function", "time"]
 
-        total_api_time += time
-        if function.startswith("sat_"):
-            total_sat_time += time
-        elif function.startswith("nnf_"):
-            total_nnf_time += time
-        elif function.startswith("vtree_"):
-            total_vtree_time += time
-        res[function] = time / total_time * 100
+    # add percentage time
+    total_time = timing_df.loc[timing_df["function"] == "total_time", "time"].values[0]
+    timing_df["pct_total_time"] = timing_df["time"] / total_time * 100
 
-    res["total_api_time"] = total_api_time / total_time * 100
-    res["total_sat_time"] = total_sat_time / total_time * 100
-    res["total_nnf_time"] = total_nnf_time / total_time * 100
-    res["total_vtree_time"] = total_vtree_time / total_time * 100
-
-    # NOTE: the pandas DF expects this as a list
-    return [res]
-
-
-def average_stats(multi_run_data: pd.DataFrame):
-    averages = multi_run_data.copy().mean()
-    averages = averages.reset_index()
-    averages.columns = ["function", "pct_cmp_time"]
+    # remove unnecessary rows
+    timing_df = timing_df[timing_df["time"] != 0]
 
     # sort in desc order
-    averages = averages.sort_values(
-        by=["pct_cmp_time", "function"], ascending=[False, True], ignore_index=True
+    timing_df = timing_df.sort_values(
+        by=["pct_total_time", "function"], ascending=[False, True]
+    ).reset_index(drop=True)
+
+    return timing_df
+
+
+def get_total_df(timing_df: pd.DataFrame):
+    grouped_timing_df = timing_df.copy()
+    grouped_timing_df["category"] = (
+        grouped_timing_df["function"]
+        .str.split("_")
+        .str[0]
+        .map(
+            {"sat": "sat_functions", "vtree": "vtree_functions", "nnf": "nnf_functions"}
+        )
     )
 
-    # remove zero values
-    averages = averages[averages["pct_cmp_time"] > 0]
+    grouped_timing_df = (
+        grouped_timing_df.groupby("category")[["time", "pct_total_time"]]
+        .sum()
+        .reset_index()
+    )
 
-    return averages
+    all_api_time = grouped_timing_df["time"].sum()
+    all_api_pct = grouped_timing_df["pct_total_time"].sum()
 
+    all_api_df = pd.DataFrame(
+        [{"category": "all_apis", "time": all_api_time, "pct_total_time": all_api_pct}]
+    )
 
-def get_total_stats(average_stats: pd.DataFrame):
-    totals = average_stats.copy()[
-        average_stats["function"].str.startswith("total_")
-    ].reset_index(drop=True)
-
-    return totals
-
-
-def get_function_stats(average_stats: pd.DataFrame):
-    functions = average_stats.copy()[
-        ~average_stats["function"].str.startswith("total_")
-    ].reset_index(drop=True)
-
-    return functions
+    final_df = pd.concat([grouped_timing_df, all_api_df]).reset_index(drop=True)
+    return final_df
 
 
 def save_to_md(cnf: str, totals: pd.DataFrame, functions: pd.DataFrame):
-    totals.columns = ["Function", "Percentage of Total Time"]
-    functions.columns = ["Function", "Percentage of Total Time"]
+    totals.columns = ["Category", "Elapsed Time", "Percentage of Total Time"]
+    functions.columns = ["Function", "Elapsed Time", "Percentage of Total Time"]
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     filename = f"{MD_DIR}{cnf}.md"
@@ -99,11 +87,12 @@ def save_to_md(cnf: str, totals: pd.DataFrame, functions: pd.DataFrame):
     os.makedirs(MD_DIR, exist_ok=True)
     with open(filename, "w+") as f:
         f.write(f"# Stats for {cnf}\n\n")
-        f.write("## Aggregate Stats\n")
+        f.write("## Aggregate Stats\n\n")
         f.write(totals.to_markdown(index=False))
         f.write("\n\n")
-        f.write("## Function Stats\n")
+        f.write("## Function Stats\n\n")
         f.write(functions.to_markdown(index=False))
+        f.write("\n")
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     print(f"[{timestamp}] MD tables saved to {filename}")
