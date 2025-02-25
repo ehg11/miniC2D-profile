@@ -24,10 +24,10 @@ def load_data(filename):
     return data
 
 
-def build_df(data: dict):
+def build_df(data: dict, del_compile_time=True):
     # NOTE: some vtree functions are not included in compile time
     # remove compile time key
-    if "compile_time" in data:
+    if del_compile_time and "compile_time" in data:
         del data["compile_time"]
 
     timing_df = pd.DataFrame.from_dict(data, orient="index").reset_index()
@@ -37,10 +37,15 @@ def build_df(data: dict):
     total_time = timing_df.loc[timing_df["function"] == "total_time", "time"].values[0]
     timing_df["pct_total_time"] = timing_df["time"] / total_time * 100
 
+    if not del_compile_time:
+        compile_time = timing_df.loc[
+            timing_df["function"] == "compile_time", "time"
+        ].values[0]
+        timing_df["pct_compile_time"] = timing_df["time"] / compile_time * 100
+
     # remove unnecessary rows
     timing_df = timing_df[timing_df["time"] != 0]
 
-    # sort in desc order
     timing_df = timing_df.sort_values(
         by=["pct_total_time", "function"], ascending=[False, True]
     ).reset_index(drop=True)
