@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from datetime import datetime
 
-from config import MD_DIR, STATS_DIR
+from config import MD_DIR, STATS_DIR, STDOUTS_DIR
 
 
 def get_cnf_paths(cnf_dir):
@@ -11,7 +11,7 @@ def get_cnf_paths(cnf_dir):
 
     # remove CNFs that have already been processed
     cnfs = [
-        f for f in cnfs if not os.path.exists(f"{STATS_DIR}{os.path.basename(f)}.json")
+        f for f in cnfs if not os.path.exists(f"{STDOUTS_DIR}{os.path.basename(f)}.txt")
     ]
 
     return cnfs
@@ -101,3 +101,16 @@ def save_to_md(cnf: str, totals: pd.DataFrame, functions: pd.DataFrame):
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     print(f"[{timestamp}] MD tables saved to {filename}")
+
+
+def save_to_txt(data: str, cnf: str):
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    stdout_file = f"{STDOUTS_DIR}{cnf}.json"
+    print(f"[{timestamp}] Saving stdouts to {stdout_file}...")
+
+    os.makedirs(STDOUTS_DIR, exist_ok=True)
+    with open(stdout_file, "w+") as f:
+        f.write(data)
+
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    print(f"[{timestamp}] Stdout saved to {stdout_file}")

@@ -1,0 +1,76 @@
+Constructing CNF... DONE
+CNF stats: 
+  Vars=1501 / Clauses=3575
+  CNF Time	0.004s
+Constructing vtree (from primal graph)... DONE
+Vtree stats:
+  Vtree widths: con<=26, c_con=446 v_con=26
+  Vtree Time	0.273s
+Compiling... DONE
+  NNF memory      	676.4 KB
+  Learned clauses      	99
+Cache stats:
+  hit rate   	70.8%
+  lookups    	7856
+  ent count  	676
+  ent memory 	39.1 KB
+  ht  memory 	152.6 MB
+  clists     	1.0 ave, 1 max
+  keys       	11.2b ave, 72.0b max, 1.0b min
+  Compile Time	0.129s
+Saving compiled NNF to file... DONE
+  Save Time       	0.004s
+NNF stats:
+  Nodes           	15443
+  Edges           	25354
+Total Time: 0.423s
+
+
+=TIMESTART=
+sat_is_instantiated_var	0.004871s
+sat_is_irrelevant_var	0.000139s
+sat_var_count	0.000000s
+sat_var2pliteral	0.004404s
+sat_var2nliteral	0.005198s
+sat_is_implied_literal	0.008916s
+sat_literal_weight	0.000000s
+sat_decide_literal	0.004368s
+sat_undo_decide_literal	0.001263s
+sat_is_subsumed_clause	0.004630s
+sat_clause_count	0.000000s
+sat_learned_clause_count	0.000000s
+sat_assert_clause	0.000201s
+sat_state_new	0.005221s
+sat_state_free	0.000736s
+sat_assert_unit_clauses	0.000011s
+sat_undo_assert_unit_clauses	0.000004s
+sat_at_assertion_level	0.000005s
+nnf_manager_new	0.000056s
+nnf_manager_free	0.000194s
+nnf_manager_memory	0.000000s
+nnf_literal2node	0.003201s
+nnf_conjoin	0.011640s
+nnf_disjoin	0.000714s
+nnf_count_nodes	0.000000s
+nnf_manager_set_root	0.000000s
+nnf_manager_get_root	0.000000s
+nnf_manager_extract_nnf	0.000000s
+nnf_manager_save_to_file	0.030247s
+nnf_load_from_file	0.000000s
+nnf_free	0.000000s
+nnf_node_count	0.000000s
+nnf_edge_count	0.000000s
+nnf_count_models	0.000000s
+nnf_entails_cnf	0.000000s
+nnf_decomposable	0.000000s
+vtree_manager_new	0.273430s
+vtree_manager_free	0.013156s
+vtree_save	0.000000s
+vtree_save_as_dot	0.000000s
+vtree_print_widths	0.000047s
+vtree_is_leaf	0.002541s
+vtree_is_shannon_node	0.006555s
+vtree_shannon_var	0.004865s
+=TIMEEND=
+Total API time: 0.386614s
+Total API calls: 1970237

@@ -1,0 +1,76 @@
+Constructing CNF... DONE
+CNF stats: 
+  Vars=343 / Clauses=68083
+  CNF Time	0.052s
+Constructing vtree (from primal graph)... DONE
+Vtree stats:
+  Vtree widths: con<=341, c_con=50108 v_con=341
+  Vtree Time	40.267s
+Compiling... DONE
+  NNF memory      	124.0 KB
+  Learned clauses      	644
+Cache stats:
+  hit rate   	0.0%
+  lookups    	643
+  ent count  	8
+  ent memory 	24.1 KB
+  ht  memory 	152.6 MB
+  clists     	1.0 ave, 1 max
+  keys       	3031.8b ave, 3373.0b max, 2626.0b min
+  Compile Time	1.404s
+Saving compiled NNF to file... DONE
+  Save Time       	0.001s
+NNF stats:
+  Nodes           	2799
+  Edges           	4604
+Total Time: 41.737s
+
+
+=TIMESTART=
+sat_is_instantiated_var	0.000693s
+sat_is_irrelevant_var	0.000037s
+sat_var_count	0.000000s
+sat_var2pliteral	0.003902s
+sat_var2nliteral	0.004853s
+sat_is_implied_literal	0.009357s
+sat_literal_weight	0.000000s
+sat_decide_literal	0.064015s
+sat_undo_decide_literal	0.015002s
+sat_is_subsumed_clause	0.559304s
+sat_clause_count	0.000000s
+sat_learned_clause_count	0.000000s
+sat_assert_clause	0.033158s
+sat_state_new	0.053337s
+sat_state_free	0.004884s
+sat_assert_unit_clauses	0.001656s
+sat_undo_assert_unit_clauses	0.000897s
+sat_at_assertion_level	0.000044s
+nnf_manager_new	0.000028s
+nnf_manager_free	0.000070s
+nnf_manager_memory	0.000000s
+nnf_literal2node	0.000256s
+nnf_conjoin	0.000841s
+nnf_disjoin	0.000072s
+nnf_count_nodes	0.000000s
+nnf_manager_set_root	0.000000s
+nnf_manager_get_root	0.000000s
+nnf_manager_extract_nnf	0.000000s
+nnf_manager_save_to_file	0.077648s
+nnf_load_from_file	0.000000s
+nnf_free	0.000000s
+nnf_node_count	0.000000s
+nnf_edge_count	0.000000s
+nnf_count_models	0.000000s
+nnf_entails_cnf	0.000000s
+nnf_decomposable	0.000000s
+vtree_manager_new	40.267019s
+vtree_manager_free	0.017355s
+vtree_save	0.000000s
+vtree_save_as_dot	0.000000s
+vtree_print_widths	0.000032s
+vtree_is_leaf	0.000259s
+vtree_is_shannon_node	0.001104s
+vtree_shannon_var	0.000789s
+=TIMEEND=
+Total API time: 41.116613s
+Total API calls: 23505275

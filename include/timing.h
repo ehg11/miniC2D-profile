@@ -54,6 +54,7 @@ enum ProfiledFunctions {
 };
 
 extern double timing[FUNC_COUNT];
+extern unsigned int num_api_calls;
 
 // SAT functions
 BOOLEAN time_sat_is_instantiated_var(const Var* var);

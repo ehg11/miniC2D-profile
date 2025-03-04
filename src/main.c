@@ -79,7 +79,8 @@ void print_time() {
   for(int i = 0; i < FUNC_COUNT; i++) {
     total_time += timing[i];
   }
-  printf("Total time: %fs\n", total_time);
+  printf("Total API time: %fs\n", total_time);
+  printf("Total API calls: %lu\n", num_api_calls);
 }
 
 /******************************************************************************

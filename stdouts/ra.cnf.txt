@@ -1,0 +1,76 @@
+Constructing CNF... DONE
+CNF stats: 
+  Vars=1236 / Clauses=11416
+  CNF Time	0.007s
+Constructing vtree (from primal graph)... DONE
+Vtree stats:
+  Vtree widths: con<=34, c_con=9600 v_con=34
+  Vtree Time	4.662s
+Compiling... DONE
+  NNF memory      	12.6 MB
+  Learned clauses      	0
+Cache stats:
+  hit rate   	94.6%
+  lookups    	316367
+  ent count  	17229
+  ent memory 	14.2 MB
+  ht  memory 	152.6 MB
+  clists     	1.0 ave, 2 max
+  keys       	817.8b ave, 1425.0b max, 3.0b min
+  Compile Time	31.428s
+Saving compiled NNF to file... DONE
+  Save Time       	0.075s
+NNF stats:
+  Nodes           	275451
+  Edges           	545958
+Total Time: 36.193s
+
+
+=TIMESTART=
+sat_is_instantiated_var	1.131090s
+sat_is_irrelevant_var	0.005081s
+sat_var_count	0.000000s
+sat_var2pliteral	0.985296s
+sat_var2nliteral	1.085013s
+sat_is_implied_literal	1.930506s
+sat_literal_weight	0.000000s
+sat_decide_literal	0.413817s
+sat_undo_decide_literal	0.065296s
+sat_is_subsumed_clause	2.683463s
+sat_clause_count	0.000000s
+sat_learned_clause_count	0.000000s
+sat_assert_clause	0.000000s
+sat_state_new	0.007883s
+sat_state_free	0.000895s
+sat_assert_unit_clauses	0.000005s
+sat_undo_assert_unit_clauses	0.000000s
+sat_at_assertion_level	0.000000s
+nnf_manager_new	0.000050s
+nnf_manager_free	0.005089s
+nnf_manager_memory	0.000000s
+nnf_literal2node	1.020862s
+nnf_conjoin	2.677650s
+nnf_disjoin	0.025537s
+nnf_count_nodes	0.000000s
+nnf_manager_set_root	0.000000s
+nnf_manager_get_root	0.000000s
+nnf_manager_extract_nnf	0.000000s
+nnf_manager_save_to_file	0.149776s
+nnf_load_from_file	0.000000s
+nnf_free	0.000000s
+nnf_node_count	0.000000s
+nnf_edge_count	0.000000s
+nnf_count_models	0.000000s
+nnf_entails_cnf	0.000000s
+nnf_decomposable	0.000000s
+vtree_manager_new	4.661686s
+vtree_manager_free	0.026298s
+vtree_save	0.000000s
+vtree_save_as_dot	0.000000s
+vtree_print_widths	0.000036s
+vtree_is_leaf	0.855608s
+vtree_is_shannon_node	2.052187s
+vtree_shannon_var	0.849546s
+=TIMEEND=
+Total API time: 20.632670s
+Total API calls: 502724922

@@ -1,0 +1,76 @@
+Constructing CNF... DONE
+CNF stats: 
+  Vars=1934 / Clauses=3985
+  CNF Time	0.005s
+Constructing vtree (from primal graph)... DONE
+Vtree stats:
+  Vtree widths: con<=52, c_con=1104 v_con=52
+  Vtree Time	1.023s
+Compiling... DONE
+  NNF memory      	111.6 MB
+  Learned clauses      	11
+Cache stats:
+  hit rate   	87.5%
+  lookups    	4287384
+  ent count  	452838
+  ent memory 	120.5 MB
+  ht  memory 	152.6 MB
+  clists     	1.0 ave, 3 max
+  keys       	231.0b ave, 252.0b max, 1.0b min
+  Compile Time	147.163s
+Saving compiled NNF to file... DONE
+  Save Time       	0.678s
+NNF stats:
+  Nodes           	2438296
+  Edges           	4872766
+Total Time: 148.936s
+
+
+=TIMESTART=
+sat_is_instantiated_var	0.469348s
+sat_is_irrelevant_var	0.041230s
+sat_var_count	0.000000s
+sat_var2pliteral	8.831379s
+sat_var2nliteral	11.176543s
+sat_is_implied_literal	20.536146s
+sat_literal_weight	0.000000s
+sat_decide_literal	0.479700s
+sat_undo_decide_literal	0.197778s
+sat_is_subsumed_clause	20.997574s
+sat_clause_count	0.000000s
+sat_learned_clause_count	0.000000s
+sat_assert_clause	0.000008s
+sat_state_new	0.006002s
+sat_state_free	0.002648s
+sat_assert_unit_clauses	0.000102s
+sat_undo_assert_unit_clauses	0.000057s
+sat_at_assertion_level	0.000002s
+nnf_manager_new	0.000071s
+nnf_manager_free	0.011324s
+nnf_manager_memory	0.000000s
+nnf_literal2node	0.296215s
+nnf_conjoin	1.101714s
+nnf_disjoin	0.185837s
+nnf_count_nodes	0.000000s
+nnf_manager_set_root	0.000000s
+nnf_manager_get_root	0.000000s
+nnf_manager_extract_nnf	0.000000s
+nnf_manager_save_to_file	0.735452s
+nnf_load_from_file	0.000000s
+nnf_free	0.000000s
+nnf_node_count	0.000000s
+nnf_edge_count	0.000000s
+nnf_count_models	0.000000s
+nnf_entails_cnf	0.000000s
+nnf_decomposable	0.000000s
+vtree_manager_new	1.022725s
+vtree_manager_free	0.260461s
+vtree_save	0.000000s
+vtree_save_as_dot	0.000000s
+vtree_print_widths	0.000070s
+vtree_is_leaf	0.262914s
+vtree_is_shannon_node	0.899608s
+vtree_shannon_var	0.511828s
+=TIMEEND=
+Total API time: 68.026736s
+Total API calls: 2741849866

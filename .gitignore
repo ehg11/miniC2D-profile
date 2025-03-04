@@ -9,3 +9,4 @@ bin/python*
 lib64
 pyvenv.cfg
 myenv
+virtualenv.pyz

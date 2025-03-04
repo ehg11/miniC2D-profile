@@ -1,0 +1,76 @@
+Constructing CNF... DONE
+CNF stats: 
+  Vars=729 / Clauses=22060
+  CNF Time	0.017s
+Constructing vtree (from primal graph)... DONE
+Vtree stats:
+  Vtree widths: con<=447, c_con=12338 v_con=447
+  Vtree Time	41.393s
+Compiling... DONE
+  NNF memory      	154.7 KB
+  Learned clauses      	20
+Cache stats:
+  hit rate   	0.0%
+  lookups    	24
+  ent count  	2
+  ent memory 	0.8 KB
+  ht  memory 	152.6 MB
+  clists     	1.0 ave, 1 max
+  keys       	341.5b ave, 367.0b max, 316.0b min
+  Compile Time	0.025s
+Saving compiled NNF to file... DONE
+  Save Time       	0.001s
+NNF stats:
+  Nodes           	3523
+  Edges           	5140
+Total Time: 41.450s
+
+
+=TIMESTART=
+sat_is_instantiated_var	0.000875s
+sat_is_irrelevant_var	0.000002s
+sat_var_count	0.000000s
+sat_var2pliteral	0.000556s
+sat_var2nliteral	0.000672s
+sat_is_implied_literal	0.001412s
+sat_literal_weight	0.000000s
+sat_decide_literal	0.004892s
+sat_undo_decide_literal	0.001629s
+sat_is_subsumed_clause	0.001246s
+sat_clause_count	0.000000s
+sat_learned_clause_count	0.000000s
+sat_assert_clause	0.000749s
+sat_state_new	0.018317s
+sat_state_free	0.002381s
+sat_assert_unit_clauses	0.000515s
+sat_undo_assert_unit_clauses	0.000245s
+sat_at_assertion_level	0.000002s
+nnf_manager_new	0.000035s
+nnf_manager_free	0.000057s
+nnf_manager_memory	0.000000s
+nnf_literal2node	0.000319s
+nnf_conjoin	0.001313s
+nnf_disjoin	0.000008s
+nnf_count_nodes	0.000000s
+nnf_manager_set_root	0.000002s
+nnf_manager_get_root	0.000000s
+nnf_manager_extract_nnf	0.000000s
+nnf_manager_save_to_file	0.037879s
+nnf_load_from_file	0.000000s
+nnf_free	0.000000s
+nnf_node_count	0.000000s
+nnf_edge_count	0.000000s
+nnf_count_models	0.000000s
+nnf_entails_cnf	0.000000s
+nnf_decomposable	0.000000s
+vtree_manager_new	41.394019s
+vtree_manager_free	0.013251s
+vtree_save	0.000000s
+vtree_save_as_dot	0.000000s
+vtree_print_widths	0.000044s
+vtree_is_leaf	0.000227s
+vtree_is_shannon_node	0.000926s
+vtree_shannon_var	0.000681s
+=TIMEEND=
+Total API time: 41.482253s
+Total API calls: 272524

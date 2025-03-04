@@ -1,0 +1,76 @@
+Constructing CNF... DONE
+CNF stats: 
+  Vars=447 / Clauses=984
+  CNF Time	0.001s
+Constructing vtree (from primal graph)... DONE
+Vtree stats:
+  Vtree widths: con<=19, c_con=173 v_con=19
+  Vtree Time	0.016s
+Compiling... DONE
+  NNF memory      	4.0 MB
+  Learned clauses      	8
+Cache stats:
+  hit rate   	90.6%
+  lookups    	96594
+  ent count  	8974
+  ent memory 	669.8 KB
+  ht  memory 	152.6 MB
+  clists     	1.0 ave, 2 max
+  keys       	28.4b ave, 34.0b max, 1.0b min
+  Compile Time	1.608s
+Saving compiled NNF to file... DONE
+  Save Time       	0.023s
+NNF stats:
+  Nodes           	87961
+  Edges           	174166
+Total Time: 1.664s
+
+
+=TIMESTART=
+sat_is_instantiated_var	0.070922s
+sat_is_irrelevant_var	0.000666s
+sat_var_count	0.000000s
+sat_var2pliteral	0.058509s
+sat_var2nliteral	0.073741s
+sat_is_implied_literal	0.126451s
+sat_literal_weight	0.000000s
+sat_decide_literal	0.059992s
+sat_undo_decide_literal	0.020963s
+sat_is_subsumed_clause	0.078238s
+sat_clause_count	0.000000s
+sat_learned_clause_count	0.000000s
+sat_assert_clause	0.000005s
+sat_state_new	0.001835s
+sat_state_free	0.000810s
+sat_assert_unit_clauses	0.000001s
+sat_undo_assert_unit_clauses	0.000000s
+sat_at_assertion_level	0.000000s
+nnf_manager_new	0.000032s
+nnf_manager_free	0.001934s
+nnf_manager_memory	0.000000s
+nnf_literal2node	0.028246s
+nnf_conjoin	0.102653s
+nnf_disjoin	0.016505s
+nnf_count_nodes	0.000000s
+nnf_manager_set_root	0.000000s
+nnf_manager_get_root	0.000000s
+nnf_manager_extract_nnf	0.000000s
+nnf_manager_save_to_file	0.075207s
+nnf_load_from_file	0.000000s
+nnf_free	0.000000s
+nnf_node_count	0.000000s
+nnf_edge_count	0.000000s
+nnf_count_models	0.000000s
+nnf_entails_cnf	0.000000s
+nnf_decomposable	0.000000s
+vtree_manager_new	0.016332s
+vtree_manager_free	0.016977s
+vtree_save	0.000000s
+vtree_save_as_dot	0.000000s
+vtree_print_widths	0.000014s
+vtree_is_leaf	0.025575s
+vtree_is_shannon_node	0.076669s
+vtree_shannon_var	0.053710s
+=TIMEEND=
+Total API time: 0.905986s
+Total API calls: 25597498

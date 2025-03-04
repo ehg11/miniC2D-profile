@@ -1,0 +1,76 @@
+Constructing CNF... DONE
+CNF stats: 
+  Vars=1087 / Clauses=13772
+  CNF Time	0.012s
+Constructing vtree (from primal graph)... DONE
+Vtree stats:
+  Vtree widths: con<=229, c_con=2700 v_con=229
+  Vtree Time	12.122s
+Compiling... DONE
+  NNF memory      	217.5 KB
+  Learned clauses      	993
+Cache stats:
+  hit rate   	0.4%
+  lookups    	1947
+  ent count  	1
+  ent memory 	0.3 KB
+  ht  memory 	152.6 MB
+  clists     	1.0 ave, 1 max
+  keys       	296.0b ave, 296.0b max, 296.0b min
+  Compile Time	0.368s
+Saving compiled NNF to file... DONE
+  Save Time       	0.001s
+NNF stats:
+  Nodes           	2643
+  Edges           	3074
+Total Time: 12.516s
+
+
+=TIMESTART=
+sat_is_instantiated_var	0.001781s
+sat_is_irrelevant_var	0.000147s
+sat_var_count	0.000000s
+sat_var2pliteral	0.012209s
+sat_var2nliteral	0.014850s
+sat_is_implied_literal	0.028587s
+sat_literal_weight	0.000000s
+sat_decide_literal	0.048973s
+sat_undo_decide_literal	0.029670s
+sat_is_subsumed_clause	0.057898s
+sat_clause_count	0.000000s
+sat_learned_clause_count	0.000000s
+sat_assert_clause	0.017347s
+sat_state_new	0.013142s
+sat_state_free	0.002542s
+sat_assert_unit_clauses	0.000004s
+sat_undo_assert_unit_clauses	0.000190s
+sat_at_assertion_level	0.000133s
+nnf_manager_new	0.000057s
+nnf_manager_free	0.000080s
+nnf_manager_memory	0.000000s
+nnf_literal2node	0.000457s
+nnf_conjoin	0.001961s
+nnf_disjoin	0.000015s
+nnf_count_nodes	0.000000s
+nnf_manager_set_root	0.000008s
+nnf_manager_get_root	0.000000s
+nnf_manager_extract_nnf	0.000000s
+nnf_manager_save_to_file	0.040567s
+nnf_load_from_file	0.000000s
+nnf_free	0.000000s
+nnf_node_count	0.000000s
+nnf_edge_count	0.000000s
+nnf_count_models	0.000000s
+nnf_entails_cnf	0.000000s
+nnf_decomposable	0.000000s
+vtree_manager_new	12.125983s
+vtree_manager_free	0.013668s
+vtree_save	0.000000s
+vtree_save_as_dot	0.000000s
+vtree_print_widths	0.000054s
+vtree_is_leaf	0.000762s
+vtree_is_shannon_node	0.002392s
+vtree_shannon_var	0.001855s
+=TIMEEND=
+Total API time: 12.415334s
+Total API calls: 4988045
